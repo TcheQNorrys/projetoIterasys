@@ -1,0 +1,10 @@
+id,username,firstName,lastName,email,password,phone,userStatus
+1733657888,tcheqnorrys,Rafa,Viana,Tche@teste.com,123456,11789065790,0
+987654321,jujumamae,Julia,Ferreira,juju@teste.com,abcdef,11987654321,1
+123456789,pedrolima,Pedro,Lima,pedro@teste.com,ghijkl,11543219876,1
+456789123,joseoliveira,Jose,Oliveira,jose@teste.com,mnopqr,11324567890,0
+456123789,fernandasilva,Fernanda,Silva,fernanda@teste.com,stuvwx,11987456321,1
+987654321,luizfernando,Luiz,Fernando,luiz@teste.com,yzabcd,11346789012,0
+789456123,marianamelo,Mariana,Melo,mari@teste.com,efghij,11456789023,1
+852963741,albertosouza,Alberto,Souza,alberto@teste.com,klmnop,11987654321,0
+369852147,anapaiva,Ana,Paiva,ana@teste.com,qrstuv,11657894321,1

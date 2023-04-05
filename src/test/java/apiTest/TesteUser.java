@@ -5,7 +5,9 @@ package apiTest;
 // Bibliotecas
 
 
+import com.google.gson.Gson;
 import io.restassured.response.Response;
+import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
@@ -14,6 +16,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.attribute.UserPrincipal;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
@@ -24,6 +27,7 @@ public class TesteUser {// Inicio da Classe
     // Atributos
     static String ct = "application/json"; // Contentype
     static String uriUser = "https://petstore.swagger.io/v2/user/";
+    static String uriUserPet = "https://petstore.swagger.io/v2/pet/";
     // Funções e Métodos
     // Funcões de Apoio
     public static String lerArquivoJson (String arquivoJson) throws IOException {
@@ -137,7 +141,7 @@ public class TesteUser {// Inicio da Classe
         System.out.println("Conteúdo do token: " + token);
     }
     @ParameterizedTest
-    @CsvFileSource(resources = "src/test/resources/csv/massaUser.csv", numLinesToSkip = 1, delimiter = ',')
+    @CsvFileSource(resources = "csv/massaUser.csv", numLinesToSkip = 1, delimiter = ',')
     public void testarIncluirUserCSV(
             String id,
             String username,
@@ -146,9 +150,8 @@ public class TesteUser {// Inicio da Classe
             String email,
             String password,
             String phone,
-            String userStatus)
-    { // inicio incluir csv
-
+            String userStatus) { // inicio incluir csv
+        /*
         StringBuilder jsonBody = new StringBuilder("{");
         jsonBody.append("'id'" + id + ",");
         jsonBody.append("'username'" + username + ",");
@@ -159,6 +162,22 @@ public class TesteUser {// Inicio da Classe
         jsonBody.append("'phone'" + phone + ",");
         jsonBody.append("'userStatus'" + userStatus);
         jsonBody.append("}");
+        */
+
+        User user = new User(); // instancia a classe user
+
+        user.id = id;
+        user.userName = username;
+        user.firstName = firstName;
+        user.lasName = lastName;
+        user.email = email;
+        user.password = password;
+        user.phone = phone;
+        user.userStatus = userStatus;
+
+        Gson gson = new Gson(); // instancia a classe Gson
+        String jsonBody = gson.toJson(user);
+
 
         String userId = "1733657888";
 
@@ -167,9 +186,9 @@ public class TesteUser {// Inicio da Classe
                 .contentType(ct)    // o tipo do conteúdo
                 .log().all()                          // mostrre tudo
                 .body(jsonBody)                       // corpo da aquisição
-        .when()                                       // Quando
+                .when()                                       // Quando
                 .post(uriUser) // Endpoint / Onde
-        .then()                                         //Então
+                .then()                                         //Então
                 .log().all()                            // mostre tudo na volta
                 .statusCode(200)                     // comunic. ida e volta ok
                 .body("code", is(200))          // tag code 200
@@ -177,5 +196,49 @@ public class TesteUser {// Inicio da Classe
                 .body("message", is(id))               // message é o userId
         ;
 
-    } // fim incluir csv
+    }
+        @Test
+        public void testarIncluirPetUser() throws IOException {
+        // carregar os dados do json
+        String jsonBody = lerArquivoJson("src/test/resources/json/petUser.json");
+
+        String userPetId = "788876";
+
+        // realizar o teste
+        given()                                        // dado que
+                .contentType(ct)    // o tipo do conteúdo
+                .log().all()                          // mostrre tudo
+                .body(jsonBody)                       // corpo da aquisição
+        .when()                                       // Quando
+                .post(uriUserPet) // Endpoint / Onde
+        .then()                                         //Então
+                .log().all()                            // mostre tudo na volta
+                .statusCode(200)                     // comunic. ida e volta ok
+                .body("code", is(200))          // tag code 200
+                .body("type", is("unknown"))    // tag type é Unknown
+                .body("message", is(userPetId))               // message é o userId
+        ;
+    }
+    @Test
+    public void testarConsultarPetUser (){
+        // resultdos esperados
+        String petName = "milk";
+        String userPetId = "788876"; // código do usuário
+        String tagName = "vacinado";
+        String status = "disponivel";
+        String tipoPet = "gato";
+
+        given()
+                .contentType(ct)
+                .log().all()
+        .when()
+                .get(uriUserPet + userPetId)
+        .then()
+                .log().all()
+                .statusCode(200)
+                .body("id", is(userPetId))
+                .body("category.name", is(tipoPet))
+                .body("tags[0].name", is(tagName))
+                ; // fim do get
+    }
 }// Fim da Classe

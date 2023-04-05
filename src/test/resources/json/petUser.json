@@ -1,0 +1,18 @@
+{
+  "id": 788876,
+  "category": {
+    "id": 2,
+    "name": "gato"
+  },
+  "name": "milk",
+  "photoUrls": [
+    "string"
+  ],
+  "tags": [
+    {
+      "id": 1,
+      "name": "vacinado"
+    }
+  ],
+  "status": "disponivel"
+}

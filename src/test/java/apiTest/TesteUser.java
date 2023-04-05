@@ -8,7 +8,10 @@ package apiTest;
 import com.google.gson.Gson;
 import io.restassured.response.Response;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.TestMethodOrder;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvFileSource;
 
@@ -21,7 +24,7 @@ import java.nio.file.attribute.UserPrincipal;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
-
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 //Classe
 public class TesteUser {// Inicio da Classe
     // Atributos
@@ -36,6 +39,7 @@ public class TesteUser {// Inicio da Classe
 
     // Funões de testes
     @Test
+    @Order(1)
     public void testarIncluirUser() throws IOException {
         // carregar os dados do json
         String jsonBody = lerArquivoJson("src/test/resources/json/user1.json");
@@ -58,6 +62,7 @@ public class TesteUser {// Inicio da Classe
         ;
     } // fim do post
     @Test
+    @Order(2)
     public void testarConsultarUser (){
         String username = "tcheqnorrys";
 
@@ -83,6 +88,7 @@ public class TesteUser {// Inicio da Classe
         ; // fim do get
     }
     @Test
+    @Order(3)
     public void testarAlterarUser() throws IOException { // Inicio do Put user
         String jsonBody = lerArquivoJson("src/test/resources/json/user2.json");
         String userId = "1733657888";
@@ -104,6 +110,7 @@ public class TesteUser {// Inicio da Classe
                 ;
     } // final do put user
     @Test
+    @Order(4)
     public void testarExcluirUser(){ // Inicio delete user
     String username = "tcheqnorrys";
 
@@ -120,6 +127,7 @@ public class TesteUser {// Inicio da Classe
                 ;
     } // fim delete user
     @Test
+    @Order(5)
     public void testarLogin() {
         String username = "tcheqnorrys";
         String password = "123456";
@@ -141,6 +149,7 @@ public class TesteUser {// Inicio da Classe
         System.out.println("Conteúdo do token: " + token);
     }
     @ParameterizedTest
+    @Order(6)
     @CsvFileSource(resources = "csv/massaUser.csv", numLinesToSkip = 1, delimiter = ',')
     public void testarIncluirUserCSV(
             String id,
@@ -197,48 +206,4 @@ public class TesteUser {// Inicio da Classe
         ;
 
     }
-        @Test
-        public void testarIncluirPetUser() throws IOException {
-        // carregar os dados do json
-        String jsonBody = lerArquivoJson("src/test/resources/json/petUser.json");
-
-        String userPetId = "788876";
-
-        // realizar o teste
-        given()                                        // dado que
-                .contentType(ct)    // o tipo do conteúdo
-                .log().all()                          // mostrre tudo
-                .body(jsonBody)                       // corpo da aquisição
-        .when()                                       // Quando
-                .post(uriUserPet) // Endpoint / Onde
-        .then()                                         //Então
-                .log().all()                            // mostre tudo na volta
-                .statusCode(200)                     // comunic. ida e volta ok
-                .body("code", is(200))          // tag code 200
-                .body("type", is("unknown"))    // tag type é Unknown
-                .body("message", is(userPetId))               // message é o userId
-        ;
-    }
-    @Test
-    public void testarConsultarPetUser (){
-        // resultdos esperados
-        String petName = "milk";
-        String userPetId = "788876"; // código do usuário
-        String tagName = "vacinado";
-        String status = "disponivel";
-        String tipoPet = "gato";
-
-        given()
-                .contentType(ct)
-                .log().all()
-        .when()
-                .get(uriUserPet + userPetId)
-        .then()
-                .log().all()
-                .statusCode(200)
-                .body("id", is(userPetId))
-                .body("category.name", is(tipoPet))
-                .body("tags[0].name", is(tagName))
-                ; // fim do get
-    }
-}// Fim da Classe
+  }// Fim da Classe

@@ -82,7 +82,7 @@ public class TestePet {
             String tags_name,
             String status){
 
-        pet pet = new Pet();
+        Pet pet = new Pet();
 
      // inicio incluir csv
 
@@ -96,7 +96,7 @@ public class TestePet {
         pet.status = status;
 
         Gson gson = new Gson(); // instancia a classe Gson
-        String jsonBody = gson.toJson(Pet);
+        String jsonBody = gson.toJson(pet);
 
 
         int userPetId = "788876";

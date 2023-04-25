@@ -73,12 +73,12 @@ public class TestePet {
     @ParameterizedTest
     @CsvFileSource(resources = "/csv/massaPet.csv", numLinesToSkip = 1, delimiter = ',')
     public void testarIncluirPetUser(
-            Integer id,
+            int id,
             String category_id,
             String category_name,
             String name,
             String photoUrls,
-            String tags_id,
+            int tags_id,
             String tags_name,
             String status){
 
@@ -86,20 +86,19 @@ public class TestePet {
 
      // inicio incluir csv
 
+        Pet pet = new Pet(); // instancia a classe user
+
         pet.id = id;
-        pet.category_id = category_id;
-        pet.category_name = category_name;
+        pet.category = new Pet.Category(category_id, category_name);
         pet.name = name;
-        pet.photoUrls = photoUrls;
-        pet.tags_id = tags_id;
-        pet.tags_name = tags_name;
+        pet.photoUrls = new String[]{photoUrls};
+        pet.tags = new Pet.Tags[]{
+                new Pet.Tags(tags_id, tags_name)
+        };
         pet.status = status;
 
         Gson gson = new Gson(); // instancia a classe Gson
         String jsonBody = gson.toJson(pet);
-
-
-        int userPetId = "788876";
 
         // realizar o teste
         given()                                        // dado que
@@ -111,9 +110,9 @@ public class TestePet {
                 .then()                                         //Então
                 .log().all()                            // mostre tudo na volta
                 .statusCode(200)                     // comunic. ida e volta ok
-                .body("code", is(200))          // tag code 200
-                .body("type", is("unknown"))    // tag type é Unknown
-                .body("message", is(id))               // message é o userId
+                .body("id", is(id))          // tag code 200
+                .body("name", is(name))    // tag type é Unknown
+                .body("tags[0].name", is(tags_name))               // message é o userId
         ;
 
     }

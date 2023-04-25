@@ -2,9 +2,11 @@ package apiTest;
 
 public class Pet {
         public int id;
+        public Tags[] tags;
         public String name;
-        public String photoUrls;
+        public String [] photoUrls;
         public String status;
+        public Category category;
 
         static class Category {
 

@@ -82,9 +82,7 @@ public class TestePet {
             String tags_name,
             String status){
 
-        Pet pet = new Pet();
-
-     // inicio incluir csv
+         // inicio incluir csv
 
         Pet pet = new Pet(); // instancia a classe user
 

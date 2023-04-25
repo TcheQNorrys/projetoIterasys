@@ -1,4 +1,4 @@
-id,"category__id","category__name","name","photoUrls__-","tags__id","tags__name","status"
+id,category_id,category_name,name,photoUrls-,tags_id,tags_name,status
 788876,"2","gato","milk","string","1","vacinado","disponivel"
 345678,"2","gato","Whiskers","string","1","vacinado","disponivel"
 234567,"3","cachorro","Buddy","string","2","castrado","adotado"

@@ -71,30 +71,32 @@ public class TestePet {
         ; // fim do get
     }
     @ParameterizedTest
-    @CsvFileSource(resources = "csv/massaPet.csv", numLinesToSkip = 1, delimiter = ',')
+    @CsvFileSource(resources = "/csv/massaPet.csv", numLinesToSkip = 1, delimiter = ',')
     public void testarIncluirPetUser(
             Integer id,
-            String categoryy__id,
-            String categoryy__name,
+            String category_id,
+            String category_name,
             String name,
-            String photoUrls__-,
-            String tags__id,
-            String tags__name,
-            String status) { // inicio incluir csv
+            String photoUrls,
+            String tags_id,
+            String tags_name,
+            String status){
 
-        User user = new User(); // instancia a classe user
+        pet pet = new Pet();
 
-        user.id = id;
-        user.categoryy__id = categoryy__id;
-        user.categoryy__name = categoryy__name;
-        user.name = name;
-        user.photoUrls__ = photoUrls__;
-        user.tags__id = tags__id;
-        user.tags__name = tags__name;
-        user.status = status;
+     // inicio incluir csv
+
+        pet.id = id;
+        pet.category_id = category_id;
+        pet.category_name = category_name;
+        pet.name = name;
+        pet.photoUrls = photoUrls;
+        pet.tags_id = tags_id;
+        pet.tags_name = tags_name;
+        pet.status = status;
 
         Gson gson = new Gson(); // instancia a classe Gson
-        String jsonBody = gson.toJson(user);
+        String jsonBody = gson.toJson(Pet);
 
 
         int userPetId = "788876";

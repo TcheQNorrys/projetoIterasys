@@ -26,6 +26,8 @@ import org.openqa.selenium.Keys;
 import java.util.*;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.Map;
 public class EveclasTransaction {
     private WebDriver driver;
     private Map<String, Object> vars;
@@ -130,8 +132,10 @@ public class EveclasTransaction {
         driver.findElement(By.cssSelector("#support-action > .button-text > span > span")).click();
         vars.put("win1791", waitForWindow(2000));
         driver.switchTo().window(vars.get("win1791").toString());
-        driver.findElement(By.id("email-i-48578316437459516")).sendKeys("rafael408200983@gmail.com");
-        driver.findElement(By.id("senha-i-7299309852583772")).sendKeys("B290589*m");
+        //driver.findElement(By.id("email-i-48578316437459516")).sendKeys("rafael408200983@gmail.com");
+        //driver.findElement(By.id("senha-i-7299309852583772")).sendKeys("B290589*m");
+        driver.findElement(By.cssSelector("input[data-vv-as=\"Email\"]")).sendKeys("rafael408200983@gmail.com");
+        driver.findElement(By.cssSelector("input[data-vv-as=\"Senha\"]")).sendKeys("B290589*m");
         driver.findElement(By.cssSelector(".container")).click();
         driver.findElement(By.cssSelector(".button-text > span")).click();
         driver.findElement(By.cssSelector(".dropdown-item:nth-child(5) .infos-text")).click();
